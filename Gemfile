@@ -76,3 +76,7 @@ group :development do
 end
 
 gem 'active_hash'
+
+group :production do
+  gem 'pg'
+end
