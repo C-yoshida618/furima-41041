@@ -12,9 +12,6 @@ class User < ApplicationRecord
     validates :nickname, presence: true
     # @含むこと・存在することはdeviseのデフォルト実装のため省略
 
-    # パスワードのバリデーション
-    validates :password
-
     # 全角ひらがな、全角カタカナ、漢字
     validates :last_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
     validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
