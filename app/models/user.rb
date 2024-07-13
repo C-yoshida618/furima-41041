@@ -11,15 +11,13 @@ class User < ApplicationRecord
   with_options presence: true do
     validates :nickname, presence: true
     # @含むこと・存在することはdeviseのデフォルト実装のため省略
-    validates :email, presence: true, uniqueness: true, format: { with: /\A[^@\s]+@[^@\s]+\z/ }
 
     # パスワードのバリデーション
-    validates :password, presence: true, length: { minimum: 6 }, format: { with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i }
-    validates :password_confirmation, presence: true
+    validates :password
 
     # 全角ひらがな、全角カタカナ、漢字
-    validates :last_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/ }
-    validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ン一-龥]/ }
+    validates :last_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
+    validates :first_name, presence: true, format: { with: /\A[ぁ-んァ-ヶ一-龥々ー]+\z/ }
     # 全角カタカナ
     validates :last_name_kana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/ }
     validates :first_name_kana, presence: true, format: { with: /\A[ァ-ヶー－]+\z/ }
