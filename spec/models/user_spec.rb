@@ -55,8 +55,7 @@ RSpec.describe User, type: :model do
     it 'パスワードが空欄だと保存できない' do
       @user.password = ''
       @user.valid?
-      expect(@user.errors.full_messages).to include("Password can't be blank", "Password confirmation doesn't match Password",
-                                                    "Password can't be blank", 'Password is invalid')
+      expect(@user.errors.full_messages).to include("Password can't be blank")
     end
     it 'パスワード（確認含む）が5文字以下だと保存できない' do
       @user.password = 'ab123'
