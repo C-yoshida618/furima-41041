@@ -1,16 +1,69 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe 'ユーザー新規登録' do
-    it 'nicknameが空だと登録できない' do
-      user = User.new(nickname: '', email: 'kkk@gmail.com', password: '00000000', password_confirmation: '00000000')
-      user.valid?
-      expect(user.errors.full_messages).to include("Nickname can't be blank")
+  describe '#create' do
+    before do
+      @user = FactoryBot.build(:user)
     end
-    it 'passwordが空だと登録できない' do
-      user = User.new(nickname: 'abe', email: 'kkk@gmail.com', password: '', password_confirmation: '00000000')
-      user.valid?
-      expect(user.errors.full_messages).to include("Password can't be blank")
+
+    context '登録ができる時' do
+      it '全ての項目の入力がが存在すれば登録できること' do
+        expect(@user).to be_valid
+      end
+
+      it 'passwordが6文字以上かつ半角英数字混合であれば登録できること' do
+        @user.password = '12345a'
+        @user.password_confirmation = '12345a'
+        expect(@user).to be_valid
+      end
+    end
+
+    context '登録ができない時' do
+      it 'nicknameが空では登録できないこと' do
+        @user.nickname = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include('ニックネームを入力してください')
+      end
+
+      it 'emailが空では登録できないこと' do
+        @user.email = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include('メールアドレスが入力されていません。')
+      end
+
+      it '重複したemailが存在する場合登録できないこと' do
+        @user.save
+        another_user = FactoryBot.build(:user, email: @user.email)
+        another_user.valid?
+        expect(another_user.errors.full_messages).to include('メールアドレスは既に使用されています。')
+      end
+
+      it 'passwordが空では登録できないこと' do
+        @user.password = ''
+        @user.valid?
+        expect(@user.errors.full_messages).to include('パスワードが入力されていません。', 'もう一度パスワードを入力してくださいとパスワードの入力が一致しません')
+      end
+
+      it 'passwordが5文字以下であれば登録できないこと' do
+        @user.password = '1234a'
+        @user.password_confirmation = '1234a'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('パスワードは6文字以上に設定して下さい。')
+      end
+
+      it 'passwordが半角数字のみのときに登録できないこと' do
+        @user.password = '123456'
+        @user.password_confirmation = '123456'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('パスワードは有効でありません。')
+      end
+
+      it 'passwordとpassword_confirmationが不一致では登録できないこと' do
+        @user.password = '12345a'
+        @user.password_confirmation = '123456a'
+        @user.valid?
+        expect(@user.errors.full_messages).to include('もう一度パスワードを入力してくださいとパスワードの入力が一致しません')
+      end
     end
   end
 end
