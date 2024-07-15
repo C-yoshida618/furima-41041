@@ -1,7 +1,8 @@
 require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.build(:item)
+    @user = FactoryBot.create(:user)
+    @item = FactoryBot.build(:item, user: @user)
   end
 
   describe '商品の出品登録' do
@@ -49,7 +50,7 @@ RSpec.describe Item, type: :model do
       it '商品名が空欄だと出品できない' do
         @item.item_name = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Item_name can't be blank")
+        expect(@item.errors.full_messages).to include("Item name can't be blank")
       end
       it '商品の説明が空欄だと出品できない' do
         @item.description = nil
@@ -69,12 +70,12 @@ RSpec.describe Item, type: :model do
       it '商品の状態の情報が「---」だと出品できない' do
         @item.item_status_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include('Status must be other than 0')
+        expect(@item.errors.full_messages).to include('Item status must be other than 0')
       end
       it '商品の状態の情報が空欄だと出品できない' do
         @item.item_status_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Status can't be blank", 'Item status is not a number')
+        expect(@item.errors.full_messages).to include("Item status can't be blank", 'Item status is not a number')
       end
       it '配送料の負担の情報が「---」だと出品できない' do
         @item.shipping_cost_id = 0
@@ -89,12 +90,12 @@ RSpec.describe Item, type: :model do
       it '発送元の地域の情報が「---」だと出品できない' do
         @item.shipping_area_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include('shipping area must be other than 0')
+        expect(@item.errors.full_messages).to include('Shipping area must be other than 0')
       end
       it '発送元の地域の情報が空欄だと出品できない' do
         @item.shipping_area_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("shipping area can't be blank", 'Prefecture is not a number')
+        expect(@item.errors.full_messages).to include("Shipping area can't be blank", 'Shipping area is not a number')
       end
       it '発送までの日数の情報が「---」だと出品できない' do
         @item.shipping_day_id = 0
@@ -104,7 +105,7 @@ RSpec.describe Item, type: :model do
       it '発送までの日数の情報が空欄だと出品できない' do
         @item.shipping_day_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping day can't be blank", 'Shipping date is not a number')
+        expect(@item.errors.full_messages).to include("Shipping day can't be blank", 'Shipping day is not a number')
       end
       it '価格が空欄だと出品できない' do
         @item.price = nil
@@ -114,7 +115,7 @@ RSpec.describe Item, type: :model do
       it '価格が半角数値でないと出品できない' do
         @item.price = '１23ac C'
         @item.valid?
-        expect(@item.errors.full_messages).to include('Price is invalid')
+        expect(@item.errors.full_messages).to include('Price is not a number')
       end
       it '価格の範囲が、300円未満だと出品できない' do
         @item.price = 100
