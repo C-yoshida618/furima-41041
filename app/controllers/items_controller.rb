@@ -1,14 +1,15 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-
-  before_action :set_item, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, only: [:new, :create]
 
   def index
-    @items = Item.includes(:user).order('created_at DESC')
+    @items = Item.all
   end
 
   def new
     @item = Item.new
+    return if user_signed_in?
+
+    redirect_to new_user_session_path
   end
 
   def create
@@ -19,4 +20,15 @@ class ItemsController < ApplicationController
       render :new
     end
   end
+
+  private
+
+  def item_params
+    params.require(:item).permit(:image, :item_name, :description, :category_id, :item_status_id, :shipping_cost_id, :shipping_area_id,
+                                 :shipping_day_id, :price).merge(user_id: current_user.id)
+  end
+
+  # def set_item
+  # @item = Item.find(params[:id])
+  # end
 end

@@ -67,12 +67,12 @@ RSpec.describe Item, type: :model do
         expect(@item.errors.full_messages).to include("Category can't be blank", 'Category is not a number')
       end
       it '商品の状態の情報が「---」だと出品できない' do
-        @item.status_id = 0
+        @item.item_status_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Status must be other than 0')
       end
       it '商品の状態の情報が空欄だと出品できない' do
-        @item.status_id = nil
+        @item.item_status_id = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Status can't be blank", 'Item status is not a number')
       end
