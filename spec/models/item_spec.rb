@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe Item, type: :model do
   before do
-    @item = FactoryBot.create(:item)
+    @item = FactoryBot.build(:item)
   end
 
   describe '商品の出品登録' do
@@ -22,11 +22,11 @@ RSpec.describe Item, type: :model do
         expect(@item).to be_valid
       end
       it '発送元の地域が「---」以外であれば登録できる' do
-        @item.prefecture_id = 1
+        @item.shipping_area_id = 1
         expect(@item).to be_valid
       end
       it '発送までの日数が「---」以外であれば登録できる' do
-        @item.shipping_date_id = 1
+        @item.shipping_day_id = 1
         expect(@item).to be_valid
       end
       it '価格が半角数字でかつ300円〜9,999,999円であれば登録できる' do

@@ -34,9 +34,9 @@ class Item < ApplicationRecord
   # ジャンルの選択が「--」の時は保存不可
   with_options numericality: { other_than: 0 } do
     validates :category_id
-    validates :prefecture_id
+    validates :shipping_area_id
     validates :item_status_id
     validates :shipping_cost_id
-    validates :shipping_date_id
+    validates :shipping_day_id
   end
 end

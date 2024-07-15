@@ -9,5 +9,9 @@ FactoryBot.define do
     shipping_area_id { 1 }
     price { 1000 }
     association :user
+
+    after(:create) do |message|
+      message.image.attach(io: File.open('public/images/test_image.png'), filename: 'test_image.png')
+    end
   end
 end
