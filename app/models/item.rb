@@ -3,11 +3,9 @@ class Item < ApplicationRecord
 
   # テーブルとのアソシエーション
   belongs_to :user
-  has_one    :purchase
+  # has_one    :purchase
   # has_many :comments
 
-  # active_storageとのアソシエーション
-  # （items・active_storage_blobsテーブルを関連付け）
   has_one_attached :image
 
   # アクティブハッシュとのアソシエーション
@@ -19,8 +17,8 @@ class Item < ApplicationRecord
 
   with_options presence: true do
     validates :image
-    validates :item_name
-    validates :description
+    validates :item_name, length: { maximum: 40 }
+    validates :description, length: { maximum: 1000 }
     validates :user_id
     validates :category_id
     validates :item_status_id
