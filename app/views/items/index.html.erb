@@ -127,14 +127,11 @@
       新規投稿商品
     </div>
     
-     <li class='list'>
+    <li class='list'>
     <%= link_to item_path(item) do %>
       <div class='item-img-content'>
         <%= image_tag(item.image.variant(resize: '500x500'), class: "item-img") if item.image.attached? %>
         <% if @user_item %> 
-
-        <div class='item-img-content'>
-          <%= image_tag "item-sample.png", class: "item-img" %>
 
           <%# 商品が売れていればsold outを表示しましょう %>
           <div class='sold-out'>
@@ -142,16 +139,17 @@
           </div>
           <%# //商品が売れていればsold outを表示しましょう %>
 
-        </div>
-        <div class='item-info'>
-          <h3 class='item-name'>
-            <%= "商品名" %>
-          </h3>
-          <div class='item-price'>
-            <span><%= "販売価格" %>円<br><%= '配送料負担' %></span>
-            <div class='star-btn'>
-              <%= image_tag "star.png", class:"star-icon" %>
-              <span class='star-count'>0</span>
+      <% end %>
+      </div>
+      <div class='item-info'>
+        <h3 class='item-name'>
+          <%= item.item_name %>
+        </h3>
+        <div class='item-price'>
+          <span><%= item.price %>円<br><%= item.shipping_cost_id %></span>
+          <div class='star-btn'>
+            <%= image_tag "star.png", class:"star-icon" %>
+            <span class='star-count'>0</span>
             </div>
           </div>
         </div>
