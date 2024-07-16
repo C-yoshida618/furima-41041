@@ -123,23 +123,21 @@
   <%# 商品一覧 %>
   <div class='item-contents'>
     <h2 class='title'>ピックアップカテゴリー</h2>
-    <div class="subtitle" >
-      新規投稿商品
-    </div>
-    
-    <li class='list'>
-    <%= link_to item_path(item) do %>
-      <div class='item-img-content'>
-        <%= image_tag item.image, class: "item-img" if item.image.attached? %>
-        <% if @user_item %> 
+    <%= link_to '新規投稿商品', new_item_path , class: "subtitle" %>
+    <ul class='item-lists'>
 
-          <%# 商品が売れていればsold outを表示しましょう %>
+      <%# 商品データがある場合は、eachメソッドで一覧表示する %>
+    <% @items.each do |item| %>
+      <li class='list'>
+        <%= link_to item_path(item) do %>
+        <div class='item-img-content'>
+        <%= image_tag item.image, class: "item-img" if item.image.attached? %>
+          <%# 商品が売れていればsold outを表示(.present?でも可) %>
+          <% if item.order != nil %>
           <div class='sold-out'>
             <span>Sold Out!!</span>
           </div>
-          <%# //商品が売れていればsold outを表示しましょう %>
-
-      <% end %>
+          <% end %>
       </div>
       <div class='item-info'>
         <h3 class='item-name'>
