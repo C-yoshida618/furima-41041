@@ -28,7 +28,7 @@
 | description | text       | null: false |
 | user        | references | null: false, foreign_key: true |
 | category_id | integer    | null: false |
-| status_id   | integer    | null: false |
+| item_status_id   | integer | null: false |
 | shipping_cost_id | integer | null: false |
 | shipping_day_id  | integer | null: false |
 | shipping_area_id | integer | null: false |
