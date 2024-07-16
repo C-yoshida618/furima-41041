@@ -4,8 +4,15 @@ class ItemsController < ApplicationController
   # 重複処理をまとめる
   before_action :set_item, only: [:show, :edit, :update, :destroy]
 
-  def new
+  def index
     @items = Item.includes(:user).order('created_at DESC')
+  end
+
+  def new
+    @item = Item.new
+    return if user_signed_in?
+
+    redirect_to new_user_session_path
   end
 
   def create
