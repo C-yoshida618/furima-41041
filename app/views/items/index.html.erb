@@ -85,11 +85,11 @@
           <%= link_to item_path(item) do %>
           <div class='item-img-content'>
             <%= image_tag item.image, class: "item-img" if item.image.attached? %>
-            <% if @item.order.present? %>
+            <%# if item.purchase != nil %>
             <div class='sold-out'>
               <span>Sold Out!!</span>
             </div>
-            <% end %>
+            <%# end %>
           </div>
           <div class='item-info'>
             <h3 class='item-name'><%= item.item_name %></h3>
@@ -101,6 +101,7 @@
               </div>
             </div>
           </div>
+          <% end %>
         </li>
       <% end %>
 
