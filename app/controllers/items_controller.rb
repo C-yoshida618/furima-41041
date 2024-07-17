@@ -23,6 +23,9 @@ class ItemsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
+
+  def show
+  end
 end
 
     private
