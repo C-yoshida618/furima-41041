@@ -35,10 +35,12 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
-    if @item.update(item_params)
-      redirect_to item_path
+    # バリデーションがOKであれば詳細画面へ
+    if @item.valid?
+      redirect_to item_path(item_params)
     else
-      render :edit
+      # NGであれば、エラー内容とデータを保持したままeditファイルを読み込み、エラーメッセージを表示させる
+      render 'edit'
     end
   end
 
