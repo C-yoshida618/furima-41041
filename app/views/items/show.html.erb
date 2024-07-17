@@ -4,10 +4,10 @@
 <div class="item-show">
   <div class="item-box">
     <h2 class="name">
-      <%= "商品名" %>
+      <%= item.item_name %>
     </h2>
     <div class="item-img-content">
-      <%= image_tag "item-sample.png" ,class:"item-box-img" %>
+      <%= image_tag item.image, class: "item-img" if item.image.attached? %>
       <%# 商品が売れている場合は、sold outを表示しましょう %>
       <div class="sold-out">
         <span>Sold Out!!</span>
@@ -19,7 +19,7 @@
         ¥ 999,999,999
       </span>
       <span class="item-postage">
-        <%= "配送料負担" %>
+        <%= item.shipping_cost.name %>
       </span>
     </div>
 
