@@ -1,16 +1,18 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :non_purchased_item, only: [:index, :create]
+
   def index
-    @item = Item.find(params[:item_id])
     @orderform = OrderForm.new
   end
 
   def create
     @orderform = OrderForm.new(order_params)
     if @orderform.valid?
+      pay_item
       @orderform.save(params, current_user.id)
       redirect_to root_path
     else
-      @item = Item.find(params[:item_id])
       render :index
     end
   end
