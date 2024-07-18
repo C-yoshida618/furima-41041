@@ -1,7 +1,4 @@
 class OrdersController < ApplicationController
-  before_action :authenticate_user!
-  before_action :non_purchased_item, only: [:index, :create]
-
   def index
     @orderform = OrderForm.new
   end
@@ -9,7 +6,7 @@ class OrdersController < ApplicationController
   def create
     @orderform = OrderForm.new(order_params)
     if @orderform.valid?
-      pay_item
+      # pay_item
       @orderform.save(params, current_user.id)
       redirect_to root_path
     else

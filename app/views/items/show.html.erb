@@ -26,9 +26,9 @@
     </div>
 
     <%# ログイン中であれば表示 %>
-    <% if user_signed_in? %> 
+  <% if user_signed_in? %> 
     <%# 出品者かつ未購入品であれば、編集・削除を表示 %>
-    <% if current_user.id == @item.user_id #&& @item.order.nil? %> 
+    <% if current_user.id == @item.user_id && @item.order.nil? %> 
 
     <%= link_to '商品の編集', edit_item_path(@item), method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
@@ -95,7 +95,7 @@
       </p>
       <button type="submit" class="comment-btn">
         <%= image_tag "comment.png" ,class:"comment-flag-icon" ,width:"20",height:"25"%>
-        <span>コメントする<span>
+        <span>コメントする</span>
       </button>
     </form>
   </div>
