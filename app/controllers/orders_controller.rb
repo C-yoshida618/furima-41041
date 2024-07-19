@@ -1,11 +1,13 @@
 class OrdersController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
+
   def index
-    @item = Item.find_by(id: params[:item_id])
     @order_form = OrderForm.new
   end
 
   def create
-    @order_form = OrderForm.new(order_form_params)
+    @order_form = OrderForm.new
     if @order_form.valid?
       Payjp.api_key = 'sk_test_57b3fceee71debe1e88b5d5a' # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
@@ -22,8 +24,12 @@ class OrdersController < ApplicationController
 
   private
 
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
   def order_form_params
     params.require(:order_form).permit(:postal_code, :shipping_area_id, :city, :block, :building, :phone_number, :token, :item_id,
-                                       :price).merge(item_id: params[:item_id].to_i, user_id: current_user.id)
+                                       :price).merge(price: params[:price]).merge(token: params[:token]).merge(item_id: params[:item_id].to_i, user_id: current_user.id)
   end
 end

@@ -43,10 +43,10 @@
 | Column           | Type       | Options                        |
 | ------           | ---------- | ------------------------------ |
 | order            | references | null: false, foreign_key: true |
-| postalcode       | string     | null: false |
+| postal_code       | string    | null: false |
 | shipping_area_id | integer    | null: false |
 | city             | string     | null: false |
-| address          | string     | null: false |
+| block            | string     | null: false |
 | building         | string     |
 | phone_number     | string     | null: false |
 

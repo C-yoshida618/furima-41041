@@ -12,7 +12,8 @@ class OrderForm
     validates :building
     validates :phone_number, format: { with: /\A\d{10,11}\z/ }
   end
-  def save(params, user_id)
+
+  def save
     order = Order.create(item_id: params[:item_id].to_i, user_id:)
     Address.create(postal_code:, shipping_area_id:, city:, building:,
                    phone_number:, order_id: order.id)
