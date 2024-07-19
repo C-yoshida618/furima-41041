@@ -4,4 +4,6 @@ class Order < ApplicationRecord
   has_one :payment
 
   attr_accessor :token
+
+  validates :token, presence: true
 end
