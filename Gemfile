@@ -69,7 +69,6 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "webdrivers"
-  gem 'rspec-rails', '~> 4.0.0'
 end
 
 group :development do
@@ -84,10 +83,14 @@ end
 
 gem 'devise'
 
-gem 'rspec-rails', '~> 4.0.0'
-gem 'factory_bot_rails'
 gem 'faker'
 
 gem 'active_hash'
 
 gem 'payjp'
+
+group :development, :test do
+  # 中略
+    gem 'rspec-rails'
+    gem 'factory_bot_rails'
+  end

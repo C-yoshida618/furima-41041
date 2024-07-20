@@ -80,16 +80,17 @@
     <div class="subtitle">新規投稿商品</div>
     <ul class='item-lists'>
       <%# 商品データがある場合は、eachメソッドで一覧表示する %>
+
       <% @items.each do |item| %>
         <li class='list'>
           <%= link_to item_path(item) do %>
           <div class='item-img-content'>
             <%= image_tag item.image, class: "item-img" if item.image.attached? %>
-            <%# if item.purchase != nil %>
+            <% if @item.present? %>
             <div class='sold-out'>
               <span>Sold Out!!</span>
             </div>
-            <%# end %>
+            <% end %>
           </div>
           <div class='item-info'>
             <h3 class='item-name'><%= item.item_name %></h3>

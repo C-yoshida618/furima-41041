@@ -10,11 +10,11 @@
       <%= image_tag @item.image, class: "item-img" if @item.image.attached? %>
       
       <%# 商品が売れている場合は、sold out %>
-      <%# if @item.order.present? %>
+      <% if @item.order.present? %>
       <div class="sold-out">
         <span>Sold Out!!</span>
       </div>
-      <%# end %>
+      <% end %>
     </div>
     <div class="item-price-box">
       <span class="item-price">
@@ -25,10 +25,8 @@
       </span>
     </div>
 
-    <%# ログイン中であれば表示 %>
-  <% if user_signed_in? %> 
-    <%# 出品者かつ未購入品であれば、編集・削除を表示 %>
-    <% if current_user.id == @item.user_id #&& @item.order.nil? %> 
+    <% if user_signed_in? %>
+    <% if current_user.id == @item.user_id %>   
 
     <%= link_to '商品の編集', edit_item_path(@item), method: :get, class: "item-red-btn" %>
     <p class="or-text">or</p>
