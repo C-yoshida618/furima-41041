@@ -10,7 +10,7 @@ class OrdersController < ApplicationController
   def create
     @OrdersPurchases = OrdersPurchases.new(order_purchases_params)
     if @OrdersPurchases.valid?
-      Payjp.api_key = 'sk_test_57b3fceee71debe1e88b5d5a' # 自身のPAY.JPテスト秘密鍵を記述しましょう
+      Payjp.api_key = ENV['PAYJP_SECRET_KEY'] # 自身のPAY.JPテスト秘密鍵を記述しましょう
       Payjp::Charge.create(
         amount: @item.price, # 商品の値段
         card: order_purchases_params[:token], # カードトークン
@@ -26,7 +26,7 @@ class OrdersController < ApplicationController
   private
 
   def order_purchases_params
-    params.require(:orders_purchases).permit(:postal_code, :shipping_area_id, :city, :block, :building, :phone_number, :price, :token).merge(
+    params.require(:orders_purchases).permit(:postal_code, :shipping_area_id, :city, :block, :building, :phone_number).merge(
       user_id: current_user.id, item_id: params[:item_id], token: params[:token], price: params[:price]
     )
   end
