@@ -4,6 +4,7 @@ class OrdersController < ApplicationController
   before_action :prevent_url, only: [:index, :create]
 
   def index
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
     @OrdersPurchases = OrdersPurchases.new
   end
 
@@ -19,6 +20,7 @@ class OrdersController < ApplicationController
       @OrdersPurchases.save
       redirect_to root_path
     else
+      gon.public_key = ENV['PAYJP_PUBLIC_KEY']
       render :index, status: :unprocessable_entity
     end
   end
