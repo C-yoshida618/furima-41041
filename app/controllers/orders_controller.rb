@@ -38,7 +38,8 @@ class OrdersController < ApplicationController
   end
 
   def prevent_url
-    return unless @item.user_id == current_user.id || @item.order.nil?
+    @item = Item.find(params[:item_id])
+    return unless @item.user_id == current_user.id || @item.order.present?
 
     redirect_to root_path
   end
