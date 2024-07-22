@@ -21,7 +21,7 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    return unless @item.user_id != current_user.id
+    return unless @item.user_id != current_user.id && @item.order.nil?
 
     redirect_to root_path
   end
@@ -60,8 +60,9 @@ class ItemsController < ApplicationController
   end
 
   def prevent_url
-    return unless @item.user_id == current_user.id || @item.order.nil?
+    unless @item.user_id == current_user.id && @item.order.nil?
 
     redirect_to root_path
   end
+end
 end
